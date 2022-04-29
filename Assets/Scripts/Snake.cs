@@ -28,6 +28,37 @@ public class Snake : MonoBehaviour {
     private int snakeBodySize;
     private List<SnakeMovePosition> snakeMovePositionList;
     private List<SnakeBodyPart> snakeBodyPartList;
+    public GameObject[] hearts;
+    private int life;
+    private bool dead;
+    public Joystick joystick;
+
+    private void Start ()
+    {
+        life = hearts.Length;
+    }
+
+   // void Update()
+  //  {
+      //  if (dead == true)
+     //   {
+
+      //  }
+  //  }
+
+  //  public void TakeDamage()
+  //  {
+    //    if (life >=1)
+      //  {
+         //   life -= d;
+          //  Destroy(hearts[life].gameObject);
+          //  if (life < 1) {
+         //       dead = true;
+
+          //  }
+
+      //  }
+  //  }
 
     public void Setup(LevelGrid levelGrid) {
         this.levelGrid = levelGrid;
@@ -56,6 +87,14 @@ public class Snake : MonoBehaviour {
         case State.Dead:
             break;
         }
+        if (dead == true)
+        {
+            //Game Over!
+            CMDebug.TextPopup("DEAD!", transform.position);
+            state = State.Dead;
+            GameHandler.SnakeDied();
+            SoundManager.PlaySound(SoundManager.Sound.SnakeDie);
+        }
     }
 
 
@@ -65,32 +104,48 @@ public class Snake : MonoBehaviour {
         {
             if (collision.transform.tag == "Enemy")
             {
-                Debug.Log("Game Over");
+            if (life >= 1)
+            {
+                life -= 1;
+                Destroy(hearts[life].gameObject);
+                SoundManager.PlaySound(SoundManager.Sound.SnakeEat);
+
+                if (life < 1)
+                {
+                  dead = true;
+
+                }
+
             }
+        }
 
         }
- //   }
+  
 
-   
+
 
 
     private void HandleInput() {
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+        float verticalMove = joystick.Vertical;
+        float horizonalMove = joystick.Horizontal;
+
+
+        if (verticalMove >= .5f ) {
             if (gridMoveDirection != Direction.Down) {
                 gridMoveDirection = Direction.Up;
             }
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+        if (verticalMove <= -.5f) {
             if (gridMoveDirection != Direction.Up) {
                 gridMoveDirection = Direction.Down;
             }
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) {
+        if (horizonalMove <= -.5f) {
             if (gridMoveDirection != Direction.Right) {
                 gridMoveDirection = Direction.Left;
             }
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow)) {
+        if (horizonalMove >= .5f) {
             if (gridMoveDirection != Direction.Left) {
                 gridMoveDirection = Direction.Right;
             }
