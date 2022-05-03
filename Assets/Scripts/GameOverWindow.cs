@@ -24,7 +24,7 @@ public class GameOverWindow : MonoBehaviour {
         instance = this;
 
         transform.Find("retryBtn").GetComponent<Button_UI>().ClickFunc = () => { 
-            Loader.Load(Loader.Scene.GameScene);
+            Loader.Load(Loader.Scene.level1);
         };
 
         Hide();

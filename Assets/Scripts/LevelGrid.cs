@@ -22,6 +22,8 @@ public class LevelGrid {
     private int width;
     private int height;
     private Snake snake;
+    public System.Random r = new System.Random();
+
 
     public LevelGrid(int width, int height) {
         this.width = width;
@@ -35,12 +37,23 @@ public class LevelGrid {
     }
 
     private void SpawnFood() {
+        int rInt = r.Next(0, 2);
         do {
             foodGridPosition = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
         } while (snake.GetFullSnakeGridPositionList().IndexOf(foodGridPosition) != -1);
 
         foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
-        foodGameObject.GetComponent<SpriteRenderer>().sprite = GameAssets.i.foodSprite;
+        if (rInt == 1) {
+            foodGameObject.GetComponent<SpriteRenderer>().sprite = GameAssets.i.foodSprite;
+
+        }
+        else
+        {
+            foodGameObject.GetComponent<SpriteRenderer>().sprite = GameAssets.i.appleSprite;
+
+        }
+
+
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y);
     }
 

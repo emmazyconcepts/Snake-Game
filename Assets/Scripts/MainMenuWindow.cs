@@ -26,8 +26,14 @@ public class MainMenuWindow : MonoBehaviour {
         transform.Find("howToPlaySub").GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
         transform.Find("mainSub").GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
-        transform.Find("mainSub").Find("playBtn").GetComponent<Button_UI>().ClickFunc = () => Loader.Load(Loader.Scene.GameScene);
+        transform.Find("mainSub").Find("playBtn").GetComponent<Button_UI>().ClickFunc = () => Loader.Load(Loader.Scene.level1);
         transform.Find("mainSub").Find("playBtn").GetComponent<Button_UI>().AddButtonSounds();
+
+        transform.Find("mainSub").Find("level1").GetComponent<Button_UI>().ClickFunc = () => Loader.Load(Loader.Scene.level2);
+        transform.Find("mainSub").Find("level1").GetComponent<Button_UI>().AddButtonSounds();
+
+        transform.Find("mainSub").Find("level2").GetComponent<Button_UI>().ClickFunc = () => Loader.Load(Loader.Scene.level3);
+        transform.Find("mainSub").Find("level2").GetComponent<Button_UI>().AddButtonSounds();
 
         transform.Find("mainSub").Find("quitBtn").GetComponent<Button_UI>().ClickFunc = () => Application.Quit();
         transform.Find("mainSub").Find("quitBtn").GetComponent<Button_UI>().AddButtonSounds();

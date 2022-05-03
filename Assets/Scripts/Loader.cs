@@ -19,9 +19,12 @@ using UnityEngine.SceneManagement;
 public static class Loader {
 
     public enum Scene {
-        GameScene,
+        level1,
+
         Loading,
         MainMenu,
+            level2,
+            level3,
     }
 
     private static Action loaderCallbackAction;

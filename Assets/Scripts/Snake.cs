@@ -4,8 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using CodeMonkey;
 using CodeMonkey.Utils;
+using UnityEngine.UI;
 
 public class Snake : MonoBehaviour {
+
+    float currentTime;
+    public float startingTime = 10f;
+
+    [SerializeField] Text countdownText;
 
     private enum Direction {
         Left,
@@ -33,9 +39,13 @@ public class Snake : MonoBehaviour {
     private bool dead;
     public Joystick joystick;
 
+  
+    
+
     private void Start ()
     {
         life = hearts.Length;
+        currentTime = startingTime;
     }
 
    // void Update()
@@ -94,6 +104,21 @@ public class Snake : MonoBehaviour {
             state = State.Dead;
             GameHandler.SnakeDied();
             SoundManager.PlaySound(SoundManager.Sound.SnakeDie);
+        }
+
+        currentTime -= 1 * Time.deltaTime;
+       // countdownText.text = currentTime.ToString("0");
+
+        if (currentTime <= 0)
+        {
+            CMDebug.TextPopup("DEAD!", transform.position);
+            state = State.Dead;
+            GameHandler.SnakeDied();
+            SoundManager.PlaySound(SoundManager.Sound.SnakeDie);
+        } else
+        {
+            countdownText.text = currentTime.ToString("0");
+
         }
     }
 
